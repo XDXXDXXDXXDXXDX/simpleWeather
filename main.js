@@ -1,5 +1,5 @@
 //获取天气数据的方法
-function getWeather(u1,u2) {
+function getWeather(u1, u2) {
     //实况天气数据请求
     var xhr1 = new XMLHttpRequest,
         url1 = u1 || "https://free-api.heweather.com/s6/weather/now?location=auto_ip&key=e6cccb7275d745a89c9b8e0b174e630d";
@@ -10,6 +10,7 @@ function getWeather(u1,u2) {
         if(this.status == 200) {
             var now = JSON.parse(this.responseText);
             var temp = now.HeWeather6["0"].now.fl;
+            // console.log(now);
             getCity(now.HeWeather6["0"].basic.location);
             getTemperature1(temp);
             getWeather1(now.HeWeather6["0"].now.cond_txt);
@@ -32,7 +33,10 @@ function getWeather(u1,u2) {
     xhr2.onload = function() {
         if(this.status == 200) {
             var forecast = JSON.parse(this.responseText);
-            var forecast2and3 = [forecast.HeWeather6["0"].daily_forecast[1].cond_txt_d,forecast.HeWeather6["0"].daily_forecast[2].cond_txt_d];
+            var forecast2and3 = [forecast.HeWeather6["0"].daily_forecast[1].cond_txt_d, forecast.HeWeather6["0"].daily_forecast[2].cond_txt_d];
+            var day2and3Temp = [forecast.HeWeather6["0"].daily_forecast[1].tmp_max, forecast.HeWeather6["0"].daily_forecast[1].tmp_min, forecast.HeWeather6["0"].daily_forecast[2].tmp_max, forecast.HeWeather6["0"].daily_forecast[2].tmp_min]
+            // console.log(forecast);
+            getTemp2and3(day2and3Temp);
             getWeather2and3(forecast2and3);
             getImg(0,forecast.HeWeather6["0"].daily_forecast["1"].cond_code_d);
             getImg(1,forecast.HeWeather6["0"].daily_forecast["2"].cond_code_d);
@@ -41,6 +45,8 @@ function getWeather(u1,u2) {
             var tempMin2 = forecast.HeWeather6["0"].daily_forecast["2"].tmp_min;
             changeColor(tempMin1, "weather2Box");
             changeColor(tempMin2, "weather3Box");
+            changeColor(tempMin1,"day2Temp");
+            changeColor(tempMin2,"day3Temp");
 
         }else if (this.status == 404) {
             alert("请检查网络连接");
@@ -55,8 +61,6 @@ function showSearch() {
     document.getElementsByClassName('searchCity')[0].style.display = "block";
     document.getElementsByClassName('index')[0].style.display = "none";
 }
-
-
 //绑定事件当点击城市栏时跳转到搜索界面
 document.getElementsByClassName('cityBox')[0].addEventListener('click',showSearch);
 
@@ -76,6 +80,13 @@ function getWeather1(weather) {
 function getWeather2and3(weather) {
     document.getElementsByClassName('weather2')[0].innerHTML = weather[0];
     document.getElementsByClassName('weather3')[0].innerHTML = weather[1];
+}
+//改变明天和后天的气温的方法
+function getTemp2and3(temp) {
+    document.getElementsByClassName('day2Max')[0].innerHTML = temp[0];
+    document.getElementsByClassName('day2Min')[0].innerHTML = temp[1];
+    document.getElementsByClassName('day3Max')[0].innerHTML = temp[2];
+    document.getElementsByClassName('day3Min')[0].innerHTML = temp[3];
 }
 //改变天气更新时间的方法
 function getUpdate(date) {
@@ -105,6 +116,30 @@ function changeColor(temp,box) {
             break;
     }   
 }
+//点击2，3色块展示最高温和最低温,再次点击隐藏
+(function showTemp() {
+    var i = 0,
+        j = 0;
+    document.getElementsByClassName('weather2Box')[0].addEventListener('click',function(){
+        if(i%2 == 0){
+            document.getElementsByClassName('day2Temp')[0].style.visibility = "visible";
+            i++;
+        }else {
+            document.getElementsByClassName('day2Temp')[0].style.visibility = "hidden";
+            i++;
+        }
+    });
+
+    document.getElementsByClassName('weather3Box')[0].addEventListener('click',function(){
+        if(j % 2 == 0){
+            document.getElementsByClassName('day3Temp')[0].style.visibility = "visible";
+            j++;
+        }else {
+            document.getElementsByClassName('day3Temp')[0].style.visibility = "hidden";
+            j++;
+        }
+    });
+})();
 //执行获取天气数据
 getWeather();
 
