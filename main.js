@@ -105,6 +105,31 @@ function changeColor(temp,box) {
             break;
     }   
 }
+
+//点击2，3色块展示最高温和最低温,再次点击隐藏
+(function showTemp() {
+    var i = 0,
+        j = 0;
+    document.getElementsByClassName('weather2Box')[0].addEventListener('click',function(){
+        if(i%2 == 0){
+            document.getElementsByClassName('day2Temp')[0].style.visibility = "visible";
+            i++;
+        }else {
+            document.getElementsByClassName('day2Temp')[0].style.visibility = "hidden";
+            i++;
+        }
+    });
+
+    document.getElementsByClassName('weather3Box')[0].addEventListener('click',function(){
+        if(j % 2 == 0){
+            document.getElementsByClassName('day3Temp')[0].style.visibility = "visible";
+            j++;
+        }else {
+            document.getElementsByClassName('day3Temp')[0].style.visibility = "hidden";
+            j++;
+        }
+    });
+})();
 //执行获取天气数据
 getWeather();
 
