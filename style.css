@@ -122,6 +122,14 @@ body {
     font-weight: normal;
 }
 
+.day2Temp, .day3Temp {
+    position: absolute;
+    width: 50%;
+    margin-top: 4px;
+    /* display: none; */
+    visibility: hidden;
+}
+
 .footer {
     position: absolute;
     bottom: 0px;
