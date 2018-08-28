@@ -33,6 +33,9 @@ function getWeather(u1,u2) {
         if(this.status == 200) {
             var forecast = JSON.parse(this.responseText);
             var forecast2and3 = [forecast.HeWeather6["0"].daily_forecast[1].cond_txt_d,forecast.HeWeather6["0"].daily_forecast[2].cond_txt_d];
+            var day2and3Temp = [forecast.HeWeather6["0"].daily_forecast[1].tmp_max, forecast.HeWeather6["0"].daily_forecast[1].tmp_min, forecast.HeWeather6["0"].daily_forecast[2].tmp_max, forecast.HeWeather6["0"].daily_forecast[2].tmp_min]
+            // console.log(forecast);
+            getTemp2and3(day2and3Temp);
             getWeather2and3(forecast2and3);
             getImg(0,forecast.HeWeather6["0"].daily_forecast["1"].cond_code_d);
             getImg(1,forecast.HeWeather6["0"].daily_forecast["2"].cond_code_d);
@@ -41,7 +44,8 @@ function getWeather(u1,u2) {
             var tempMin2 = forecast.HeWeather6["0"].daily_forecast["2"].tmp_min;
             changeColor(tempMin1, "weather2Box");
             changeColor(tempMin2, "weather3Box");
-
+            changeColor(tempMin1,"day2Temp");
+            changeColor(tempMin2,"day3Temp");
         }else if (this.status == 404) {
             alert("请检查网络连接");
         }
@@ -76,6 +80,13 @@ function getWeather1(weather) {
 function getWeather2and3(weather) {
     document.getElementsByClassName('weather2')[0].innerHTML = weather[0];
     document.getElementsByClassName('weather3')[0].innerHTML = weather[1];
+}
+//改变明天和后天的气温的方法
+function getTemp2and3(temp) {
+    document.getElementsByClassName('day2Max')[0].innerHTML = temp[0];
+    document.getElementsByClassName('day2Min')[0].innerHTML = temp[1];
+    document.getElementsByClassName('day3Max')[0].innerHTML = temp[2];
+    document.getElementsByClassName('day3Min')[0].innerHTML = temp[3];
 }
 //改变天气更新时间的方法
 function getUpdate(date) {
