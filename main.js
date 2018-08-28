@@ -33,7 +33,11 @@ function getWeather(u1, u2) {
     xhr2.onload = function() {
         if(this.status == 200) {
             var forecast = JSON.parse(this.responseText);
+<<<<<<< HEAD
             var forecast2and3 = [forecast.HeWeather6["0"].daily_forecast[1].cond_txt_d, forecast.HeWeather6["0"].daily_forecast[2].cond_txt_d];
+=======
+            var forecast2and3 = [forecast.HeWeather6["0"].daily_forecast[1].cond_txt_d,forecast.HeWeather6["0"].daily_forecast[2].cond_txt_d];
+>>>>>>> 6738aa768003351d8aad9fe4edc5bd6307f76ffb
             var day2and3Temp = [forecast.HeWeather6["0"].daily_forecast[1].tmp_max, forecast.HeWeather6["0"].daily_forecast[1].tmp_min, forecast.HeWeather6["0"].daily_forecast[2].tmp_max, forecast.HeWeather6["0"].daily_forecast[2].tmp_min]
             // console.log(forecast);
             getTemp2and3(day2and3Temp);
@@ -47,7 +51,10 @@ function getWeather(u1, u2) {
             changeColor(tempMin2, "weather3Box");
             changeColor(tempMin1,"day2Temp");
             changeColor(tempMin2,"day3Temp");
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6738aa768003351d8aad9fe4edc5bd6307f76ffb
         }else if (this.status == 404) {
             alert("请检查网络连接");
         }
@@ -116,6 +123,10 @@ function changeColor(temp,box) {
             break;
     }   
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6738aa768003351d8aad9fe4edc5bd6307f76ffb
 //点击2，3色块展示最高温和最低温,再次点击隐藏
 (function showTemp() {
     var i = 0,
